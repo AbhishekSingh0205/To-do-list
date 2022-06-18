@@ -108,6 +108,11 @@
         editBtn.forEach((element, index) => {
           element.addEventListener("click", () => {
             let inp = prompt("What task you want to replace it with?");
+            while (!inp) {
+              inp = prompt(
+                "Please provide the taks you want to replace it with?"
+              );
+            }
             const text = document.querySelectorAll(".text");
             text[index].textContent = inp;
           });
