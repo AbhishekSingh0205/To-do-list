@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <!-- <link rel="stylesheet" href="style.css" /> -->
     <title>To Do list</title>
   </head>
 
@@ -62,67 +62,37 @@
       </div>
     </main>
     <script>
-      let editBtn = [],
-        listGrp = [];
-      let addBtn = document.getElementById("add_btn");
-      const givenInput = document.getElementById("input--given");
-      console.log(addBtn);
-      addBtn.addEventListener("click", addChapter);
-      function addChapter(e) {
-        if (String(givenInput.value).trim() === "") {
-          alert("Please give the task");
-          return;
-        }
-        // const newLi = document.createElement("li");
-        // newLi.classList.add("list-group-item");
-        const newLi = document.querySelector(".list-group");
-        newLi.innerHTML += `<li class="list-group-item" style=" display: flex;
-              justify-content: space-between;
-              border: 2px solid rgb(206, 212, 218);
-              align-items: center;">  <h3 class="text" style="flex: 6; color:grey">${givenInput.value}</h3>
-            <div  style="flex: 1; padding-right: 2px">
-              <input
-              class="edit-btn"
-                type="submit"
-                style="background-color: rgb(2, 177, 111)"
-                value="Edit"
-              />
-            </div>
-            <div style="flex: 1; padding-right: 2px">
-              <input
-              class="remove-btn"
-                type="submit"
-                style="background-color: rgb(2, 177, 111)"
-                value="Remove"
-              />
-            </div>
-          </li>`;
-        let parentChild = document.getElementsByClassName("list-group");
-        console.log(parentChild);
-        // parentChild[0].append(newLi);
-        givenInput.value = "";
-        listGrp = document.querySelectorAll(".list-group-item");
-        editBtn = document.querySelectorAll(".edit-btn");
-        // console.log(editBtn);
-        console.log(editBtn);
-        editBtn.forEach((element, index) => {
-          element.addEventListener("click", () => {
-            let inp = prompt("What task you want to replace it with?");
-            while (!inp) {
-              inp = prompt(
-                "Please provide the taks you want to replace it with?"
-              );
-            }
-            const text = document.querySelectorAll(".text");
-            text[index].textContent = inp;
-          });
+      let ptr = 0;
+      const addBtn = document.getElementById("add_btn");
+      addBtn.addEventListener("click", addOn);
+      function addOn() {
+        var input = document.getElementById("input--given").value;
+        var list = document.getElementsByClassName("list-group")[0];
+        var li = document.createElement("div");
+
+        li.innerHTML = `
+            <h3 id="input-${ptr}" style="width:70%">${input}</h3>
+            <button id="edit-${ptr}" class="edit btn btn-outline-primary" type="button">Edit</button>
+            <button id="btn-${ptr}" class="remove btn btn-outline-primary" type="button">Remove</button>
+            `;
+        // add to DOM
+        li.classList = "input-group";
+        list.appendChild(li);
+
+        // add event listeners
+        const inputSchema = document.getElementById(`input-${ptr}`);
+        const edit = document.getElementById(`edit-${ptr}`);
+        const btn = document.getElementById(`btn-${ptr}`);
+
+        btn.addEventListener("click", () => {
+          inputSchema.parentElement.remove();
         });
-        const removeBtn = document.querySelectorAll(".remove-btn");
-        removeBtn.forEach((element, index) => {
-          element.addEventListener("click", () => {
-            listGrp[index].remove();
-          });
+
+        edit.addEventListener("click", () => {
+          let newVal = prompt("Enter updated value");
+          inputSchema.value = newVal;
         });
+        ptr++;
       }
     </script>
   </body>
